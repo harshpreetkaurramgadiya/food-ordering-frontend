@@ -1,140 +1,3 @@
-// import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-
-// const Checkout = ({ cartItems, setCart }) => {
-//   const navigate = useNavigate();
-
-//   const handlePayment = async () => {
-//     try {
-//       const token = localStorage.getItem("token");
-
-//       // Create Order
-//       const orderData = {
-//         items: cartItems.map((item) => ({
-//           food: item.id, // IMPORTANT
-//           quantity: item.quantity,
-//           price: item.price,
-//         })),
-//         totalAmount: cartItems.reduce(
-//           (sum, item) => sum + item.price * item.quantity,
-//           0
-//         ),
-//       };
-
-//       // Save Order in DB
-//       const orderResponse = await axios.post(
-//         "http://localhost:5000/api/orders/create",
-//         orderData,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-
-//       // Create Razorpay Payment Order
-//       const paymentResponse = await axios.post(
-//         "http://localhost:5000/api/payment/create",
-//         {
-//           orderId: orderResponse.data.order._id,
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-
-//       const options = {
-//         key: "rzp_test_T4ygIes2NlzIR6",
-//         amount: paymentResponse.data.paymentOrder.amount,
-//         currency: "INR",
-//         name: "Food Ordering App",
-//         description: "Food Payment",
-//         order_id: paymentResponse.data.paymentOrder.id,
-
-//         handler: async function (response) {
-//           try {
-//             await axios.post(
-//               "http://localhost:5000/api/payment/verify",
-//               {
-//                 razorpay_order_id: response.razorpay_order_id,
-//                 razorpay_payment_id: response.razorpay_payment_id,
-//                 razorpay_signature: response.razorpay_signature,
-//                 orderId: orderResponse.data.order._id,
-//               },
-//               {
-//                 headers: {
-//                   Authorization: `Bearer ${token}`,
-//                 },
-//               }
-//             );
-
-//             toast.success("Payment Successful 🎉");
-//             setCart([]);
-//             navigate("/orders");
-//           } catch (error) {
-//             console.log(error);
-//             toast.error("Payment Verification Failed");
-//           }
-//         },
-
-//         theme: {
-//           color: "#f97316",
-//         },
-//       };
-
-//       const razor = new window.Razorpay(options);
-//       razor.open();
-
-//     } catch (error) {
-//       console.log("FULL ERROR =", error);
-//       console.log("RESPONSE =", error.response?.data);
-//       toast.error("Something went wrong");
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-4xl mx-auto p-10">
-//       <h1 className="text-4xl font-bold mb-8">
-//         Checkout 💳
-//       </h1>
-
-//       <div className="bg-white shadow-lg p-6 rounded-xl">
-
-//         <input
-//           type="text"
-//           placeholder="Full Name"
-//           className="w-full border p-3 rounded mb-4"
-//         />
-
-//         <input
-//           type="text"
-//           placeholder="Address"
-//           className="w-full border p-3 rounded mb-4"
-//         />
-
-//         <input
-//           type="text"
-//           placeholder="Phone Number"
-//           className="w-full border p-3 rounded mb-4"
-//         />
-
-//         <button
-//           onClick={handlePayment}
-//           className="bg-green-500 text-white px-6 py-3 rounded"
-//         >
-//           Pay Now
-//         </button>
-
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Checkout;
-
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -160,7 +23,7 @@ const Checkout = ({ cartItems, setCart }) => {
       };
 
       const orderResponse = await axios.post(
-        "http://localhost:5000/api/orders/create",
+        `${import.meta.env.VITE_API_URL}/api/orders/create`,
         orderData,
         {
           headers: {
@@ -170,7 +33,7 @@ const Checkout = ({ cartItems, setCart }) => {
       );
 
       const paymentResponse = await axios.post(
-        "http://localhost:5000/api/payment/create",
+        `${import.meta.env.VITE_API_URL}/api/payment/create`,
         {
           orderId: orderResponse.data.order._id,
         },
@@ -191,7 +54,7 @@ const Checkout = ({ cartItems, setCart }) => {
 
         handler: async function (response) {
           await axios.post(
-            "http://localhost:5000/api/payment/verify",
+            `${import.meta.env.VITE_API_URL}/api/payment/verify`,
             {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,

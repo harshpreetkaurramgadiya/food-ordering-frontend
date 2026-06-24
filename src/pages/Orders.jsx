@@ -1,136 +1,3 @@
-
-
-
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// const Orders = () => {
-//   const [orders, setOrders] = useState([]);
-
-//   useEffect(() => {
-//     fetchOrders();
-//   }, []);
-
-//   const fetchOrders = async () => {
-//     try {
-//       const token = localStorage.getItem("token");
-
-//       const response = await axios.get(
-//         "http://localhost:5000/api/orders/my-orders",
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-
-//       setOrders(response.data.orders);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-100 py-10 px-5">
-//       <div className="max-w-5xl mx-auto">
-
-//         <h1 className="text-4xl font-bold mb-8 text-center">
-//           📦 My Orders
-//         </h1>
-
-//         {orders.length === 0 ? (
-//           <div className="bg-white p-10 rounded-3xl shadow-lg text-center">
-//             <h2 className="text-2xl font-semibold text-gray-500">
-//               No Orders Yet 😔
-//             </h2>
-//           </div>
-//         ) : (
-//           <div className="space-y-8">
-//             {orders.map((order) => (
-//               <div
-//                 key={order._id}
-//                 className="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition duration-300"
-//               >
-//                 {/* Top Section */}
-//                 <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
-
-//                   <div>
-//                     <h2 className="text-xl font-bold">
-//                       Order ID
-//                     </h2>
-
-//                     <p className="text-gray-500 text-sm">
-//                       {order._id}
-//                     </p>
-//                   </div>
-
-//                   <div className="flex gap-3">
-
-//                     <span
-//                       className={`px-5 py-2 rounded-full text-white font-semibold ${
-//                         order.isPaid
-//                           ? "bg-green-500"
-//                           : "bg-red-500"
-//                       }`}
-//                     >
-//                       {order.isPaid ? "Paid ✅" : "Pending ❌"}
-//                     </span>
-
-//                     <span className="px-5 py-2 rounded-full bg-orange-500 text-white font-semibold">
-//                       {order.status}
-//                     </span>
-
-//                   </div>
-//                 </div>
-
-//                 {/* Items */}
-//                 <div className="space-y-4">
-//                   {order.items.map((item) => (
-//                     <div
-//                       key={item._id}
-//                       className="flex justify-between items-center border rounded-2xl p-4 bg-gray-50"
-//                     >
-//                       <div>
-//                         <h3 className="font-bold text-lg">
-//                           🍕 {item.food?.name}
-//                         </h3>
-
-//                         <p className="text-gray-500">
-//                           Quantity: {item.quantity}
-//                         </p>
-//                       </div>
-
-//                       <div className="text-xl font-bold text-orange-500">
-//                         ₹{item.price}
-//                       </div>
-//                     </div>
-//                   ))}
-//                 </div>
-
-//                 {/* Total */}
-//                 <div className="mt-6 border-t pt-5 flex justify-between items-center">
-
-//                   <h2 className="text-xl font-semibold">
-//                     Total Amount
-//                   </h2>
-
-//                   <h2 className="text-3xl font-bold text-green-600">
-//                     ₹{order.totalAmount}
-//                   </h2>
-
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Orders;
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -147,7 +14,7 @@ const Orders = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:5000/api/orders/my-orders",
+        `${import.meta.env.VITE_API_URL}/api/orders/my-orders`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -166,7 +33,7 @@ const Orders = () => {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `http://localhost:5000/api/orders/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/orders/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
         {/* Logo */}
         <Link
@@ -37,44 +37,44 @@ const Navbar = () => {
 
           <Link
             to="/login"
-            className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600"
+            className="bg-orange-500 text-white px-4 py-2 rounded-lg"
           >
             Login
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Icon */}
         <button
           className="md:hidden text-2xl"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setOpen(!open)}
         >
-          {menuOpen ? <FaTimes /> : <FaBars />}
+          {open ? <FaTimes /> : <FaBars />}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white shadow-lg flex flex-col items-center gap-5 py-5">
-          <Link to="/" onClick={() => setMenuOpen(false)}>
+      {open && (
+        <div className="md:hidden bg-white shadow-lg flex flex-col gap-4 px-6 py-4">
+          <Link to="/" onClick={() => setOpen(false)}>
             Home
           </Link>
 
-          <Link to="/menu" onClick={() => setMenuOpen(false)}>
+          <Link to="/menu" onClick={() => setOpen(false)}>
             Menu
           </Link>
 
-          <Link to="/orders" onClick={() => setMenuOpen(false)}>
+          <Link to="/orders" onClick={() => setOpen(false)}>
             Orders
           </Link>
 
-          <Link to="/cart" onClick={() => setMenuOpen(false)}>
+          <Link to="/cart" onClick={() => setOpen(false)}>
             Cart
           </Link>
 
           <Link
             to="/login"
-            onClick={() => setMenuOpen(false)}
-            className="bg-orange-500 text-white px-5 py-2 rounded-lg"
+            onClick={() => setOpen(false)}
+            className="bg-orange-500 text-white px-4 py-2 rounded-lg text-center"
           >
             Login
           </Link>

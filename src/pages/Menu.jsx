@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FoodCard from "../components/FoodCard";
+import { useNavigate } from "react-router-dom";
 
 const foods = [
   {
@@ -58,7 +59,8 @@ const foods = [
   }
 ];
 
-const Menu = ({cart, setCart}) => {
+const Menu = ({ cart, setCart }) => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // ✅ FILTER
@@ -67,7 +69,7 @@ const Menu = ({cart, setCart}) => {
       ? foods
       : foods.filter((food) => food.category === selectedCategory);
 
-  // ✅ ADD TO CART (FIXED)
+
   const addToCart = (food) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === food.id);
@@ -82,6 +84,11 @@ const Menu = ({cart, setCart}) => {
 
       return [...prevCart, { ...food, quantity: 1 }];
     });
+
+    // Mobile par direct Cart page open hoga
+    if (window.innerWidth < 768) {
+      navigate("/cart");
+    }
   };
 
   return (
@@ -98,11 +105,10 @@ const Menu = ({cart, setCart}) => {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-5 py-2 rounded-full ${
-              selectedCategory === cat
+            className={`px-5 py-2 rounded-full ${selectedCategory === cat
                 ? "bg-orange-500 text-white"
                 : "bg-gray-200"
-            }`}
+              }`}
           >
             {cat}
           </button>
